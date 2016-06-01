@@ -1,6 +1,6 @@
 #include "MyQlock.h"
 
-MyQlock::MyQlock(uint16_t LED_Count, uint8_t Pin, Adafruit_NeoPixel *StripPtr)
+MyQlock::MyQlock(uint16_t LED_Count, uint8_t Pin, Adafruit_NeoPixel *StripPtr) : CurrentColor(60.0, 1.0, 1.0)
 {
   this->StripLenght = LED_Count;
   this->StripPin = Pin;
@@ -12,11 +12,12 @@ MyQlock::MyQlock(uint16_t LED_Count, uint8_t Pin, Adafruit_NeoPixel *StripPtr)
 void MyQlock::begin(void)
 {
   this->Strip->begin();
-  for (uint8_t i = 0; i< StripLenght; i++)
+  for (uint8_t i = 0; i < StripLenght; i++)
   {
     Strip->setPixelColor(i, Strip->Color(0, 0, 0));
   }
   Strip->show();
+  
 }
 
 uint32_t MyQlock::timeMaskUpdate(uint8_t H, uint8_t M)
@@ -50,12 +51,12 @@ void MyQlock::writeOutput()
       if (PixelIsOn[y][x])
       {
         uint8_t Pixel = Mapping[y][x];
-        if (Pixel < StripLenght) Strip->setPixelColor(Pixel, Strip->Color(255, 0, 0));
+        if (Pixel < StripLenght) Strip->setPixelColor(Pixel, (uint8_t)(this->CurrentColor.r*255.0), (uint8_t)(this->CurrentColor.g*255.0), (uint8_t)(this->CurrentColor.b*255.0));
       }
       else
       {
         uint8_t Pixel = Mapping[y][x];
-        if (Pixel < StripLenght) Strip->setPixelColor(Pixel, Strip->Color(0, 0, 0));
+        if (Pixel < StripLenght) Strip->setPixelColor(Pixel, 0);
       }
     }
   }

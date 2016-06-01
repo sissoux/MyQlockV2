@@ -1,15 +1,14 @@
 #include "Color.h"
 
-/*
-Color::Color(double r, double g, double b)
+
+Color::Color(double h, double s, double v)
 {
-  RGB.r = r;
-  RGB.g = g;
-  RGB.b = b;
+  this->h = h;
+  this->s = s;
+  this->v = v;
+  convertToRGB();
 }
-
-
-  
+ /*
 Color::hsv rgb2hsv(rgb in)
 {
     hsv         out;
@@ -46,63 +45,63 @@ Color::hsv rgb2hsv(rgb in)
         out.h += 360.0;
 
     return out;
-}
+}*/
 
 
-Color::rgb hsv2rgb(hsv in)
+void Color::convertToRGB()
 {
     double      hh, p, q, t, ff;
     long        i;
-    rgb         out;
 
-    if(in.s <= 0.0) {       // < is bogus, just shuts up warnings
-        out.r = in.v;
-        out.g = in.v;
-        out.b = in.v;
-        return out;
+    if(this->s <= 0.0) {       // < is bogus, just shuts up warnings
+        this->r = this->v;
+        this->g = this->v;
+        this->b = this->v;
+        return;
     }
-    hh = in.h;
+    hh = this->h;
     if(hh >= 360.0) hh = 0.0;
     hh /= 60.0;
     i = (long)hh;
     ff = hh - i;
-    p = in.v * (1.0 - in.s);
-    q = in.v * (1.0 - (in.s * ff));
-    t = in.v * (1.0 - (in.s * (1.0 - ff)));
+    p = this->v * (1.0 - this->s);
+    q = this->v * (1.0 - (this->s * ff));
+    t = this->v * (1.0 - (this->s * (1.0 - ff)));
 
     switch(i) {
     case 0:
-        out.r = in.v;
-        out.g = t;
-        out.b = p;
+        this->r = this->v;
+        this->g = t;
+        this->b = p;
         break;
     case 1:
-        out.r = q;
-        out.g = in.v;
-        out.b = p;
+        this->r = q;
+        this->g = this->v;
+        this->b = p;
         break;
     case 2:
-        out.r = p;
-        out.g = in.v;
-        out.b = t;
+        this->r = p;
+        this->g = this->v;
+        this->b = t;
         break;
 
     case 3:
-        out.r = p;
-        out.g = q;
-        out.b = in.v;
+        this->r = p;
+        this->g = q;
+        this->b = this->v;
         break;
     case 4:
-        out.r = t;
-        out.g = p;
-        out.b = in.v;
+        this->r = t;
+        this->g = p;
+        this->b = this->v;
         break;
     case 5:
     default:
-        out.r = in.v;
-        out.g = p;
-        out.b = q;
+        this->r = this->v;
+        this->g = p;
+        this->b = q;
         break;
     }
-    return out;     
-}*/
+    return;     
+}
+

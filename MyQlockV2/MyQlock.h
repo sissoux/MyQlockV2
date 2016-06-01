@@ -1,6 +1,7 @@
 #include "Arduino.h"
 #include <Adafruit_NeoPixel.h>
 #include <TimeLib.h>
+#include "Color.h"
 
 #ifndef Qlock_h
 #define Qlock_h
@@ -12,6 +13,7 @@
 class MyQlock
 {
   public:
+    Color CurrentColor;//(120, 1, 1);
     MyQlock(uint16_t LED_Count, uint8_t Pin, Adafruit_NeoPixel *StripPointer);
     Adafruit_NeoPixel *Strip = NULL;
     uint16_t StripLenght = 0;
@@ -52,7 +54,7 @@ class MyQlock
       {150, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 150},
       {0, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 12}
     };
-    
+
     // Mask is used to determine if Pixel {Col;Row} shall be lit at a particular hour and minute combination.
     uint32_t Mask[ROW_COUNT][COLUMN_COUNT] =
     {
