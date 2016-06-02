@@ -97,7 +97,7 @@ unsigned long processSyncMessage()
   if (Serial.find(TIME_HEADER))
   {
     pctime = Serial.parseInt();
-    return pctime;
   }
+  return pctime;
 }
 
