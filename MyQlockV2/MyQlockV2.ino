@@ -20,11 +20,16 @@ elapsedMillis DisplayRefreshTimer = 0;
 elapsedMillis SerialRefreshTimer = 0;
 #define SERIAL_REFRESH_RATE 10 //ms
 
+elapsedMillis ChangeColorTimer = 0;
+#define CHANGE_COLOR_RATE 500 //ms
 
+
+double Sign = -0.005;
 
 
 void setup()
 {
+  Serial.begin(115200);
   Qlock.begin();
   InitRTC();
   UpdateTime(&Qlock.Hour, &Qlock.Minute);
@@ -55,6 +60,37 @@ void TaskManager()
     SerialRefreshTimer = 0;
     SerialCheck();
   }
+  
+  if (ChangeColorTimer >= CHANGE_COLOR_RATE)
+  {
+    ChangeColorTimer = 0;
+    ColorUpdate();
+  }
+}
+
+void ColorUpdate()
+{
+  if (Qlock.CurrentColor.h < 360)
+  {
+    Qlock.CurrentColor.h += 0.1;
+  }
+  else 
+  {
+    Qlock.CurrentColor.h =0;    
+  }
+  
+  Qlock.CurrentColor.s = Qlock.CurrentColor.s + Sign;
+  if (Qlock.CurrentColor.s >= 1)
+  {
+    Sign = -0.005;
+    Qlock.CurrentColor.s = 1;
+  }
+  else if (Qlock.CurrentColor.s <=0)
+  {
+    Sign = 0.01;   
+    Qlock.CurrentColor.s = 0;
+  }
+  Qlock.CurrentColor.convertToRGB();  
 }
 
 void SerialCheck()

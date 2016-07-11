@@ -1,6 +1,6 @@
 #include "MyQlock.h"
 
-MyQlock::MyQlock(uint16_t LED_Count, uint8_t Pin, Adafruit_NeoPixel *StripPtr) : CurrentColor(60.0, 1.0, 1.0)
+MyQlock::MyQlock(uint16_t LED_Count, uint8_t Pin, Adafruit_NeoPixel *StripPtr) : CurrentColor(200, 1.0, 0.7)
 {
   this->StripLenght = LED_Count;
   this->StripPin = Pin;
