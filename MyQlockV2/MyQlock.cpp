@@ -25,6 +25,14 @@ uint32_t MyQlock::timeMaskUpdate(uint8_t H, uint8_t M)
   uint8_t hours = H % 13 + (H - 1) / 12 + (M >= 35);
   uint8_t Minutes = M / 5;
   uint8_t minutes = M % 5;
+  if (H===23 && M>=35)
+  {
+    hours = 0;
+  }
+  if (H==12 && M>=35)
+  {
+    hours = 1;
+  }
   return (uint32_t)1 << (17 + hours) | (uint32_t)1 << (5 + Minutes) | (uint32_t)1 << minutes;
 }
 
